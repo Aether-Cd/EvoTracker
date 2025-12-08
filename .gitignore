@@ -1,0 +1,10 @@
+# Ignorar a chave secreta do banco de dados
+firebase_key.json
+
+# Ignorar arquivos temporários do Python
+__pycache__/
+*.pyc
+
+# Ignorar ambiente virtual (se tiver)
+venv/
+.env
