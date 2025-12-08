@@ -12,7 +12,7 @@ O **EvoTracker Pro** é uma aplicação Full Stack de monitoramento de hábitos 
 
 ## 🔗 Demonstração Online
 Acesse o projeto rodando em tempo real na nuvem:
-### [👉 Clique aqui para acessar o EvoTracker](https://evotracker-hivo.onrender.com)
+### [👉 Clique aqui para acessar o EvoTracker](https://evotracker.onrender.com/login)
 
 *(Nota: Como é hospedado em serviço gratuito, o primeiro carregamento pode levar alguns segundos)*
 
