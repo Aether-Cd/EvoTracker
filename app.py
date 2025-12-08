@@ -37,10 +37,6 @@ def login():
     if request.method == 'POST':
         session.permanent = True
         
-        # --- A MÁGICA ACONTECE AQUI ---
-        # 1. Pega o nome
-        # 2. .strip() tira espaços inúteis
-        # 3. .lower() converte para minúsculo (hivo)
         nome_padronizado = request.form['nome'].strip().lower()
         
         session['usuario'] = nome_padronizado
@@ -78,7 +74,7 @@ def homepage():
         
         lista_historico.append(dado_limpo)
 
-        # Lógica do Gráfico
+       
         cat = dado_limpo['categoria']
         if cat in contagem_categorias:
             contagem_categorias[cat] += 1

@@ -1,44 +1,38 @@
-/* static/style.css */
 
 body {
-    background-color: #121212; /* Fundo Dark */
+    background-color: #121212; 
     color: #e0e0e0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Estilo dos Cartões (Cards) */
 .card {
     background-color: #1e1e1e;
     border: 1px solid #333;
-    transition: transform 0.2s; /* Animação suave ao passar o mouse */
+    transition: transform 0.2s; /
 }
 
-/* Efeito Hover (levanta um pouco o card) */
 .card:hover {
     transform: translateY(-2px);
 }
 
-/* Campos de Texto (Inputs) no modo Dark */
+
 .form-control, .form-select {
     background-color: #2c2c2c;
     border: 1px solid #444;
     color: #fff;
 }
 
-/* Quando clica no campo */
+
 .form-control:focus, .form-select:focus {
     background-color: #333;
     color: #fff;
     border-color: #0d6efd;
-    box-shadow: none; /* Remove o brilho padrão do Bootstrap */
+    box-shadow: none; 
 }
-
-/* Cor do texto de exemplo (Placeholder) */
 ::placeholder {
     color: #888 !important;
 }
 
-/* Barra de Frase Motivacional */
 .alert-motivacao {
     background: linear-gradient(45deg, #0d6efd, #0099ff); /* Degradê Azul */
     color: white;
@@ -47,8 +41,7 @@ body {
     border-radius: 10px;
 }
 
-/* Ajuste na tabela para ela não esticar demais */
 .table-responsive {
-    scrollbar-width: thin; /* Barra de rolagem fina */
+    scrollbar-width: thin;
     scrollbar-color: #555 #1e1e1e;
 }
