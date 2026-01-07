@@ -3,23 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - EvoTracker</title>
+    <title>Dashboard - EvoTracker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="login-body">
-    <div class="login-wrapper">
-        <h1 class="logo-text">Evo<span style="color:#00E676">Tracker</span></h1>
-        
-        <form action="/login" method="POST">
-            <div style="margin-bottom: 20px;">
-                <input type="text" name="nome" class="input-neon" style="width: 100%; padding: 15px;" placeholder="Digite seu nome..." required autocomplete="off">
-            </div>
-            <button type="submit" class="btn-neon">Entrar e Evoluir</button>
-        </form>
-        
-        <div class="text-muted" style="margin-top: 30px;">
-            Versão Pro 2.0 &copy; 2026
+<body>
+
+    <div class="dashboard-container">
+        <header>
+            <h1>Olá, {{ nome }} 👋</h1>
+            <p>Seu corpo é seu único equipamento.</p>
+        </header>
+
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="openTab(event, 'segunda')">SEG</button>
+            <button class="tab-btn" onclick="openTab(event, 'terca')">TER</button>
+            <button class="tab-btn" onclick="openTab(event, 'quarta')">QUA</button>
+            <button class="tab-btn" onclick="openTab(event, 'quinta')">QUI</button>
+            <button class="tab-btn" onclick="openTab(event, 'sexta')">SEX</button>
+            <button class="tab-btn" onclick="openTab(event, 'status')" style="color: #00B0FF;">STATUS 📊</button>
+            <button class="tab-btn" onclick="openTab(event, 'perfil')" style="color: #FFD700;">PERFIL 👤</button>
         </div>
+
+        <div id="segunda" class="tab-content active-content">
+            <h2 class="day-title">Segunda: Upper Body</h2>
+            <div class="exercise-card">
+                <div class="card-header"><h3>Supino Inclinado (Halter)</h3></div>
+                <div class="col-headers"><span>Reps</span> <span>Kg</span></div>
+                <div class="sets-container">
+                    <div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                    <div class="set-row"><span>2</span><input type="number" class="input-neon" value="10"><input type="number" class="input-neon" placeholder="kg"></div>
+                    <div class="set-row"><span>3</span><input type="number" class="input-neon" value="8"><input type="number" class="input-neon" placeholder="kg"></div>
+                </div>
+            </div>
+            <div class="exercise-card cardio-card">
+                <div class="card-header"><h3>🏃 Cardio</h3></div>
+                <div class="set-row"><span class="cardio-label">Tempo (min):</span><input type="number" class="input-neon"></div>
+            </div>
+        </div>
+
+        <div id="terca" class="tab-content">
+            <h2 class="day-title">Terça: Lower Body</h2>
+            <div class="exercise-card">
+                <div class="card-header"><h3>Agachamento Livre</h3></div>
+                <div class="col-headers"><span>Reps</span> <span>Kg</span></div>
+                <div class="sets-container">
+                    <div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                    <div class="set-row"><span>2</span><input type="number" class="input-neon" value="10"><input type="number" class="input-neon" placeholder="kg"></div>
+                </div>
+            </div>
+             <div class="exercise-card cardio-card">
+                <div class="card-header"><h3>🏃 Cardio</h3></div>
+                <div class="set-row"><span class="cardio-label">Tempo (min):</span><input type="number" class="input-neon"></div>
+            </div>
+        </div>
+
+        <div id="quarta" class="tab-content"><h2 class="day-title">Quarta: Costas/Bíceps</h2><p class="text-muted">Adicione exercícios...</p></div>
+        <div id="quinta" class="tab-content"><h2 class="day-title">Quinta: Peito/Tríceps</h2><p class="text-muted">Adicione exercícios...</p></div>
+        <div id="sexta" class="tab-content"><h2 class="day-title">Sexta: Perna (Repete)</h2><p class="text-muted">Adicione exercícios...</p></div>
+
+        <div id="status" class="tab-content">
+            <h2 class="day-title">Fadiga Muscular</h2>
+            <div class="exercise-card" style="height: 350px;">
+                <canvas id="muscleChart"></canvas>
+            </div>
+            <div class="exercise-card">
+                <div class="card-header"><h3>Simular</h3></div>
+                <div class="sets-container" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button onclick="updateFatigue('Peitoral', 25)" class="tab-btn">Peito</button>
+                    <button onclick="updateFatigue('Pernas', 35)" class="tab-btn">Perna</button>
+                    <button onclick="resetFatigue()" class="tab-btn" style="color: #00B0FF; border-color: #00B0FF;">Dormir</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="perfil" class="tab-content">
+            <h2 class="day-title">Análise Corporal</h2>
+            <div class="exercise-card">
+                <div class="card-header"><h3>📏 Medidas</h3></div>
+                <div class="sets-container">
+                    <div class="set-row"><span>Altura</span><input type="number" id="altura" class="input-neon" placeholder="175"></div>
+                    <div class="set-row"><span>Peso</span><input type="number" id="peso" class="input-neon" placeholder="80"></div>
+                    <div class="set-row"><span>Pesc.</span><input type="number" id="pescoco" class="input-neon" placeholder="40"></div>
+                    <div class="set-row"><span>Cint.</span><input type="number" id="cintura" class="input-neon" placeholder="85"></div>
+                </div>
+            </div>
+            <div class="exercise-card extra-card">
+                <div class="card-header"><h3>🧬 Resultados</h3></div>
+                <div class="sets-container text-center">
+                    <div style="display: flex; justify-content: space-around; margin-bottom: 20px;">
+                        <div><h4 style="color: #666;">IMC</h4><span id="result-imc" style="font-size: 1.5rem; font-weight: bold;">--</span></div>
+                        <div><h4 style="color: #666;">Gordura</h4><span id="result-fat" style="font-size: 1.5rem; font-weight: bold; color: #00B0FF;">--%</span></div>
+                    </div>
+                    <div style="background: #000; padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #FFD700; margin-bottom: 5px;">🔥 Gasto Hoje</h4>
+                        <span id="result-calorias" style="font-size: 2rem; font-weight: bold; color: #FFD700;">0</span> kcal
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
