@@ -7,30 +7,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body class="login-body">
-
     <div class="login-wrapper">
         <h1 class="logo-text">Evo<span style="color:#00E676">Tracker</span></h1>
         
         <form action="/login" method="POST">
             <div style="margin-bottom: 20px;">
-                <input type="text" 
-                       name="nome" 
-                       class="input-neon" 
-                       style="width: 100%; padding: 15px;" 
-                       placeholder="Digite seu nome..." 
-                       required 
-                       autocomplete="off">
+                <input type="text" name="nome" class="input-neon" style="width: 100%; padding: 15px;" placeholder="Digite seu nome..." required autocomplete="off">
             </div>
-            
-            <button type="submit" class="btn-neon">
-                Entrar e Evoluir
-            </button>
+            <button type="submit" class="btn-neon">Entrar e Evoluir</button>
         </form>
-
+        
         <div class="text-muted" style="margin-top: 30px;">
             Versão Pro 2.0 &copy; 2026
         </div>
     </div>
-
 </body>
 </html>
