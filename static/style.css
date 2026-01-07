@@ -7,178 +7,153 @@
 }
 
 body {
-    background-color: #121212; /* Fundo Preto */
+    background-color: #121212; /* Fundo Preto Absoluto */
     color: white;
+    padding-bottom: 50px; /* Espaço para rolar no celular */
 }
 
 /* UTILITÁRIOS */
-.spacer-20 { height: 20px; }
-.spacer-30 { height: 30px; }
-.spacer-50 { height: 50px; }
-.text-muted { color: #888; font-size: 0.9em; padding: 10px; }
+.text-muted { color: #888; font-size: 0.8em; margin-top: 5px; }
+.text-center { text-align: center; }
 
-/* TELA DE LOGIN */
-.login-container {
+/* TELA DE LOGIN (Estilos Específicos) */
+.login-body {
     height: 100vh;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     background: radial-gradient(circle, #1F2937 0%, #121212 100%);
+    padding: 20px;
 }
 
-.logo {
-    width: 250px;
-    margin-bottom: 20px;
+.login-wrapper {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
 }
 
-.input-login {
-    width: 90%;
-    max-width: 350px;
-    padding: 15px;
-    background-color: #2C2C2C;
-    border: 1px solid #444;
-    border-radius: 25px;
-    color: white;
-    font-size: 1rem;
-}
-
-.btn-login {
-    width: 90%;
-    max-width: 350px;
-    padding: 15px;
-    background-color: #00B0FF; /* Azul Neon */
-    border: none;
-    border-radius: 25px;
-    color: black;
+.logo-text {
+    font-size: 2.5rem;
     font-weight: bold;
-    font-size: 1.1rem;
-    cursor: pointer;
-    box-shadow: 0 0 15px rgba(0, 176, 255, 0.4);
-    transition: 0.3s;
-}
-
-.btn-login:hover {
-    background-color: #00E5FF;
-    transform: scale(1.02);
+    margin-bottom: 40px;
+    text-shadow: 0 0 15px rgba(0, 230, 118, 0.3);
 }
 
 /* DASHBOARD */
 .dashboard-container {
-    padding: 20px;
-    max-width: 600px; /* Limita largura no PC */
+    padding: 20px 10px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
-header h1 {
-    font-size: 1.8rem;
-    color: #fff;
-}
-
-header p {
-    color: #888;
+header {
     margin-bottom: 20px;
+    padding-left: 5px;
 }
 
-/* ABAS DE NAVEGAÇÃO */
+header h1 { color: #fff; font-size: 1.8rem; }
+header p { color: #00B0FF; font-size: 0.9rem; }
+
+/* BOTÕES DE ABAS */
 .tabs-container {
     display: flex;
     gap: 10px;
     overflow-x: auto;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
     margin-bottom: 20px;
-    scrollbar-width: none; /* Esconde barra de rolagem no Firefox */
+    scrollbar-width: none; /* Firefox */
 }
+.tabs-container::-webkit-scrollbar { display: none; /* Chrome */ }
 
 .tab-btn {
     background: #1F2937;
     border: 1px solid #333;
-    color: #888;
-    padding: 10px 20px;
+    color: #AAA;
+    padding: 10px 18px;
     border-radius: 20px;
     cursor: pointer;
     white-space: nowrap;
     transition: 0.3s;
+    font-weight: 600;
 }
 
 .tab-btn.active {
     background-color: #00E676; /* Verde Neon */
     color: black;
-    font-weight: bold;
     border-color: #00E676;
-    box-shadow: 0 0 10px rgba(0, 230, 118, 0.4);
+    box-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
 }
 
 /* CONTEÚDO DAS ABAS */
-.tab-content {
-    display: none;
-    animation: fadeIn 0.5s;
-}
-
-.active-content {
-    display: block;
-}
+.tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+.active-content { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 .day-title {
     color: #00E676;
     margin-bottom: 15px;
     font-size: 1.2rem;
+    border-left: 4px solid #00E676;
+    padding-left: 10px;
 }
 
 /* CARDS DE EXERCÍCIO */
 .exercise-card {
     background-color: #1F2937;
-    border-radius: 15px;
+    border-radius: 16px;
     margin-bottom: 15px;
     padding: 15px;
     border: 1px solid #333;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
 
 .card-header h3 {
     font-size: 1rem;
-    color: #fff;
+    color: white;
     margin-bottom: 10px;
     border-bottom: 1px solid #444;
-    padding-bottom: 5px;
+    padding-bottom: 8px;
 }
 
-/* CORES ESPECIAIS PARA CARDS */
-.extra-card .card-header h3 { color: #FFD700; } /* Amarelo Abdominal */
-.cardio-card .card-header h3 { color: #00B0FF; } /* Azul Cardio */
+/* CORES ESPECIAIS */
+.extra-card .card-header h3 { color: #FFD700; } /* Amarelo (Abs) */
+.cardio-card .card-header h3 { color: #00B0FF; } /* Azul (Cardio) */
+.cardio-card { border-color: #004ba0; }
 
-/* INPUTS DENTRO DOS CARDS */
+/* INPUTS E GRIDS */
+.col-headers {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px 5px 35px;
+    font-size: 0.75rem;
+    color: #666;
+    text-transform: uppercase;
+}
+
 .set-row {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .set-row span {
     width: 20px;
-    color: #888;
+    color: #666;
     font-weight: bold;
+    text-align: center;
 }
 
+.cardio-label {
+    width: auto !important;
+    min-width: 80px;
+    color: #00B0FF !important;
+    font-size: 0.9rem;
+    text-align: left !important;
+}
+
+/* INPUTS NEON */
 .input-neon {
     flex: 1;
     background-color: #121212;
-    border: 1px solid #444;
-    color: white;
-    padding: 8px;
-    border-radius: 8px;
-    text-align: center;
-    transition: 0.3s;
-}
-
-.input-neon:focus {
-    outline: none;
-    border-color: #00E676;
-    box-shadow: 0 0 5px rgba(0, 230, 118, 0.5);
-}
-
-/* ANIMAÇÃO */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+    border:
