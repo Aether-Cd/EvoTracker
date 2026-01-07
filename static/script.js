@@ -1,132 +1,145 @@
-// Função para "Fazer Login" (Trocar de tela)
-function fazerLogin() {
-    // Pega os elementos da tela
-    const loginScreen = document.getElementById('login-screen');
-    const dashboardScreen = document.getElementById('dashboard-screen');
-    const userInput = document.querySelector('.input-login').value;
-
-    // Efeito visual simples (Validação fake)
-    if (userInput.trim() === "") {
-        alert("Por favor, digite um usuário!");
-        return;
-    }
-
-    // Esconde o Login e Mostra o Dashboard
-    loginScreen.style.display = 'none';
-    dashboardScreen.style.display = 'block';
-    
-    // Atualiza o nome do usuário (Opcional)
-    // document.querySelector('header h1').innerText = `Olá, ${userInput} 👋`;
-}
-
-// Função para Trocar as Abas (Segunda, Terça...)
+/* === 1. SISTEMA DE NAVEGAÇÃO ENTRE ABAS === */
 function openTab(evt, dayName) {
     var i, tabcontent, tablinks;
 
-    // 1. Esconde todo o conteúdo das abas
+    // Esconde todo o conteúdo
     tabcontent = document.getElementsByClassName("tab-content");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
         tabcontent[i].classList.remove("active-content");
     }
 
-    // 2. Remove a classe 'active' de todos os botões
+    // Remove a classe 'active' de todos os botões
     tablinks = document.getElementsByClassName("tab-btn");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
 
-    // 3. Mostra o dia clicado e ativa o botão
+    // Mostra o dia atual
     document.getElementById(dayName).style.display = "block";
     document.getElementById(dayName).classList.add("active-content");
-    evt.currentTarget.className += " active";
-
+    
+    // Ativa o botão visualmente
+    if (evt) {
+        evt.currentTarget.className += " active";
+    }
 }
-// === CÁLCULO DE MÉTRICAS ===
 
-    function calcularTudo() {
-        calcularGorduraEIMC();
-        calcularCaloriasTreino();
-    }
+/* === 2. GRÁFICO DE FADIGA MUSCULAR (Chart.js) === */
+let muscleData = {
+    labels: ['Peitoral', 'Costas', 'Pernas', 'Ombros', 'Bíceps', 'Tríceps'],
+    values: [10, 10, 10, 10, 10, 10]
+};
+let myChart = null;
 
-    function calcularGorduraEIMC() {
-        const altura = parseFloat(document.getElementById('altura').value);
-        const peso = parseFloat(document.getElementById('peso').value);
-        const pescoco = parseFloat(document.getElementById('pescoco').value);
-        const cintura = parseFloat(document.getElementById('cintura').value);
+function getColor(value) {
+    if (value < 30) return '#00B0FF'; // Azul
+    if (value < 60) return '#BD00FF'; // Roxo
+    return '#FF0055'; // Vermelho
+}
 
-        // 1. Cálculo do IMC (Peso / Altura²)
-        if (altura > 0 && peso > 0) {
-            const alturaMetros = altura / 100;
-            const imc = (peso / (alturaMetros * alturaMetros)).toFixed(1);
-            document.getElementById('result-imc').innerText = imc;
-        }
-
-        // 2. Cálculo de Gordura (Fórmula Navy Method Simplificada para Homens)
-        // %Gordura = 495 / (1.0324 - 0.19077(log10(cintura-pescoço)) + 0.15456(log10(altura))) - 450
-        if (cintura > 0 && pescoco > 0 && altura > 0) {
-            try {
-                // Conversão logarítmica básica aproximada
-                let fatorCinturaPescoco = Math.log10(cintura - pescoco);
-                let fatorAltura = Math.log10(altura);
-                
-                let gordura = 495 / (1.0324 - 0.19077 * fatorCinturaPescoco + 0.15456 * fatorAltura) - 450;
-                
-                // Ajuste de segurança para valores irreais
-                if(gordura < 3) gordura = 3; 
-                
-                document.getElementById('result-fat').innerText = gordura.toFixed(1) + "%";
-            } catch (e) {
-                document.getElementById('result-fat').innerText = "--";
-            }
-        }
-    }
-
-    function calcularCaloriasTreino() {
-        const peso = parseFloat(document.getElementById('peso').value) || 70; // Peso padrão 70 se vazio
-        
-        // 1. Contar quantos inputs de "Reps" foram preenchidos nas abas de treino
-        // Vamos varrer todos os inputs dentro da classe .sets-container que não sejam do perfil
-        let inputsTreino = document.querySelectorAll('.tab-content:not(#perfil) input[type="number"]');
-        let setsPreenchidos = 0;
-
-        inputsTreino.forEach(input => {
-            if (input.value !== "" && input.value > 0) {
-                // Consideramos cada input preenchido como uma parte de uma série feita
-                setsPreenchidos++;
+document.addEventListener("DOMContentLoaded", function() {
+    const chartCanvas = document.getElementById('muscleChart');
+    if (chartCanvas) {
+        const ctx = chartCanvas.getContext('2d');
+        myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: muscleData.labels,
+                datasets: [{
+                    label: '% de Fadiga',
+                    data: muscleData.values,
+                    backgroundColor: muscleData.values.map(val => getColor(val)),
+                    borderColor: '#1F2937',
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { min: 0, max: 100, grid: { color: '#333' } },
+                    y: { grid: { display: false }, ticks: { color: 'white' } }
+                },
+                plugins: { legend: { display: false } }
             }
         });
+    }
+});
 
-        // Como cada série tem 2 inputs (reps e carga), dividimos por 2 para ter o número real de séries
-        let totalSeriesReais = Math.ceil(setsPreenchidos / 2);
+function updateFatigue(muscle, amount) {
+    const index = muscleData.labels.indexOf(muscle);
+    if (index !== -1 && myChart) {
+        let newValue = muscleData.values[index] + amount;
+        if (newValue > 100) newValue = 100;
+        muscleData.values[index] = newValue;
+        myChart.data.datasets[0].data = muscleData.values;
+        myChart.data.datasets[0].backgroundColor = muscleData.values.map(val => getColor(val));
+        myChart.update();
+    }
+}
 
-        // 2. A Fórmula MET (Metabolic Equivalent of Task)
-        // Musculação Moderada/Intensa gasta aprox 0.1 kcal por kg por minuto.
-        // Estimamos que 1 Série dura 1.5 minutos (Execução + Descanso)
-        
-        let tempoEstimadoMinutos = totalSeriesReais * 1.5;
-        
-        // Gasto Calórico = Tempo(min) * MET * Peso / 200 (Fórmula simplificada)
-        // MET musculação = 6.0
-        let caloriasGastas = Math.floor(tempoEstimadoMinutos * 6 * peso / 200);
+function resetFatigue() {
+    if (myChart) {
+        muscleData.values = muscleData.values.map(v => v > 10 ? v - 40 : 0);
+        myChart.data.datasets[0].data = muscleData.values;
+        myChart.data.datasets[0].backgroundColor = muscleData.values.map(val => getColor(val));
+        myChart.update();
+    }
+}
 
-        // Adiciona um valor base se fez cardio (procura input cardio)
-        let inputsCardio = document.querySelectorAll('.cardio-card input');
-        inputsCardio.forEach(input => {
-            if(input.value > 0) {
-                // Cardio gasta mais: aprox 8 a 10 calorias por minuto
-                caloriasGastas += (input.value * 8); 
-            }
-        });
+/* === 3. CALCULADORA DE MÉTRICAS === */
+function calcularTudo() {
+    // Inputs
+    const altura = parseFloat(document.getElementById('altura').value);
+    const peso = parseFloat(document.getElementById('peso').value) || 70;
+    const pescoco = parseFloat(document.getElementById('pescoco').value);
+    const cintura = parseFloat(document.getElementById('cintura').value);
 
-        // Atualiza na tela com animaçãozinha
-        document.getElementById('result-calorias').innerText = caloriasGastas + " kcal";
+    // IMC
+    if (altura > 0 && peso > 0) {
+        const imc = (peso / ((altura/100) ** 2)).toFixed(1);
+        const elImc = document.getElementById('result-imc');
+        if(elImc) elImc.innerText = imc;
     }
 
-    // Adiciona um "ouvinte" para recalcular calorias sempre que digitar algo nos treinos
-    document.addEventListener('input', function(evt) {
-        if(evt.target.classList.contains('input-neon')) {
-            calcularCaloriasTreino();
+    // Gordura (Navy Method)
+    if (cintura > 0 && pescoco > 0 && altura > 0) {
+        let fator = Math.log10(cintura - pescoco);
+        let gordura = 495 / (1.0324 - 0.19077 * fator + 0.15456 * Math.log10(altura)) - 450;
+        if (gordura < 3) gordura = 3;
+        const elFat = document.getElementById('result-fat');
+        if(elFat) elFat.innerText = gordura.toFixed(1) + "%";
+    }
+
+    // Calorias (Baseado em inputs preenchidos)
+    let inputsTreino = document.querySelectorAll('.tab-content:not(#perfil) input[type="number"]');
+    let setsPreenchidos = 0;
+    inputsTreino.forEach(input => {
+        // Ignora campos de cardio para contagem de séries
+        if (input.value > 0 && !input.parentElement.querySelector('.cardio-label')) {
+            setsPreenchidos++;
         }
     });
+    
+    let seriesReais = Math.ceil(setsPreenchidos / 2);
+    let calorias = Math.floor((seriesReais * 1.5) * 6 * peso / 200); // Fórmula MET
 
+    // Soma Cardio
+    let inputsCardio = document.querySelectorAll('.cardio-card input');
+    inputsCardio.forEach(input => {
+        if(input.value > 0) calorias += (parseFloat(input.value) * 8);
+    });
+
+    const elCalorias = document.getElementById('result-calorias');
+    if(elCalorias) elCalorias.innerText = Math.round(calorias);
+}
+
+// Ouvinte Automático
+document.addEventListener('input', function(evt) {
+    if(evt.target.classList.contains('input-neon')) {
+        calcularTudo();
+    }
+});
