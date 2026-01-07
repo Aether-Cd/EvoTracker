@@ -1,187 +1,47 @@
 /* GERAL */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body { background-color: #121212; color: white; padding-bottom: 50px; }
 
-body {
-    background-color: #121212;
-    color: white;
-    padding-bottom: 50px;
-}
-
-/* TELA DE LOGIN */
-.login-body {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle, #1F2937 0%, #121212 100%);
-}
-
-.login-wrapper {
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    padding: 20px;
-}
-
-.logo-text {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 40px;
-    text-shadow: 0 0 15px rgba(0, 230, 118, 0.3);
-}
+/* LOGIN */
+.login-body { height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, #1F2937 0%, #121212 100%); }
+.login-wrapper { width: 100%; max-width: 400px; text-align: center; padding: 20px; }
+.logo-text { font-size: 2.5rem; font-weight: bold; margin-bottom: 40px; text-shadow: 0 0 15px rgba(0, 230, 118, 0.3); }
 
 /* DASHBOARD */
-.dashboard-container {
-    padding: 20px 10px;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-header {
-    margin-bottom: 20px;
-    padding-left: 5px;
-}
+.dashboard-container { padding: 20px 10px; max-width: 800px; margin: 0 auto; }
+header { margin-bottom: 20px; padding-left: 5px; }
 header h1 { color: #fff; font-size: 1.8rem; }
 header p { color: #00B0FF; font-size: 0.9rem; margin-top: 5px;}
 
-/* BOTÕES DE ABAS */
-.tabs-container {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
-    scrollbar-width: none;
-}
+/* ABAS */
+.tabs-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 15px; margin-bottom: 20px; scrollbar-width: none; }
 .tabs-container::-webkit-scrollbar { display: none; }
+.tab-btn { background: #1F2937; border: 1px solid #333; color: #AAA; padding: 10px 18px; border-radius: 20px; cursor: pointer; white-space: nowrap; transition: 0.3s; font-weight: 600; }
+.tab-btn.active { background-color: #00E676; color: black; border-color: #00E676; box-shadow: 0 0 12px rgba(0, 230, 118, 0.4); }
 
-.tab-btn {
-    background: #1F2937;
-    border: 1px solid #333;
-    color: #AAA;
-    padding: 10px 18px;
-    border-radius: 20px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: 0.3s;
-    font-weight: 600;
-}
-
-.tab-btn.active {
-    background-color: #00E676; /* Verde Neon */
-    color: black;
-    border-color: #00E676;
-    box-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
-}
-
-/* CONTEÚDO DAS ABAS */
+/* CONTEÚDO */
 .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
 .active-content { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-.day-title {
-    color: #00E676;
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-    border-left: 4px solid #00E676;
-    padding-left: 10px;
-}
+.day-title { color: #00E676; margin-bottom: 15px; font-size: 1.2rem; border-left: 4px solid #00E676; padding-left: 10px; }
 
 /* CARDS */
-.exercise-card {
-    background-color: #1F2937;
-    border-radius: 16px;
-    margin-bottom: 15px;
-    padding: 15px;
-    border: 1px solid #333;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-}
-
-.card-header h3 {
-    font-size: 1rem;
-    color: white;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #444;
-    padding-bottom: 8px;
-}
-
+.exercise-card { background-color: #1F2937; border-radius: 16px; margin-bottom: 15px; padding: 15px; border: 1px solid #333; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+.card-header h3 { font-size: 1rem; color: white; margin-bottom: 10px; border-bottom: 1px solid #444; padding-bottom: 8px; }
 .extra-card .card-header h3 { color: #FFD700; }
 .cardio-card .card-header h3 { color: #00B0FF; }
 .cardio-card { border-color: #004ba0; }
 
-/* INPUTS E GRIDS */
-.col-headers {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px 5px 35px;
-    font-size: 0.75rem;
-    color: #666;
-    text-transform: uppercase;
-}
+/* INPUTS */
+.col-headers { display: flex; justify-content: space-between; padding: 0 10px 5px 35px; font-size: 0.75rem; color: #666; text-transform: uppercase; }
+.set-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.set-row span { width: 25px; color: #666; font-weight: bold; text-align: center; }
+.cardio-label { width: auto !important; min-width: 80px; color: #00B0FF !important; font-size: 0.9rem; text-align: left !important; }
+.input-neon { flex: 1; background-color: #121212; border: 1px solid #444; color: white; padding: 10px; border-radius: 8px; text-align: center; font-size: 1rem; transition: 0.3s; }
+.input-neon:focus { outline: none; border-color: #00E676; box-shadow: 0 0 8px rgba(0, 230, 118, 0.3); }
 
-.set-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.set-row span {
-    width: 25px;
-    color: #666;
-    font-weight: bold;
-    text-align: center;
-}
-
-.cardio-label {
-    width: auto !important;
-    min-width: 80px;
-    color: #00B0FF !important;
-    font-size: 0.9rem;
-    text-align: left !important;
-}
-
-.input-neon {
-    flex: 1;
-    background-color: #121212;
-    border: 1px solid #444;
-    color: white;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 1rem;
-    transition: 0.3s;
-}
-
-.input-neon:focus {
-    outline: none;
-    border-color: #00E676;
-    box-shadow: 0 0 8px rgba(0, 230, 118, 0.3);
-}
-
-.btn-neon {
-    width: 100%;
-    padding: 14px;
-    background-color: #00B0FF;
-    border: none;
-    border-radius: 25px;
-    color: black;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: 0.3s;
-}
-
-.btn-neon:hover {
-    background-color: #00E5FF;
-    box-shadow: 0 0 15px rgba(0, 176, 255, 0.5);
-    transform: scale(1.02);
-}
-
+/* BOTÕES */
+.btn-neon { width: 100%; padding: 14px; background-color: #00B0FF; border: none; border-radius: 25px; color: black; font-weight: bold; font-size: 1rem; cursor: pointer; text-transform: uppercase; transition: 0.3s; margin-top: 10px; }
+.btn-neon:hover { filter: brightness(1.2); transform: scale(1.02); }
+.btn-save { background-color: #00E676; box-shadow: 0 0 15px rgba(0, 230, 118, 0.3); }
 .text-muted { color: #888; font-size: 0.8em; margin-top: 5px; }
