@@ -3,27 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EvoTracker - Seu Treino</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Dashboard - EvoTracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Ajuste para garantir que o dashboard ocupe a tela certa */
+        body {
+            background-color: #121212;
+            color: white;
+            padding: 20px;
+        }
+        
+        /* Ocultar conteúdo das abas por padrão */
+        .tab-content { display: none; }
+        .active-content { display: block; animation: fadeIn 0.5s; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
 
-    <div id="login-screen" class="login-container">
-        <img src="screenshots/logo.png" alt="EvoTracker Logo" class="logo">
-        <div class="spacer-50"></div>
-        
-        <input type="text" placeholder="E-mail ou Usuário" class="input-login">
-        <div class="spacer-20"></div>
-        <input type="password" placeholder="Senha" class="input-login">
-        <div class="spacer-30"></div>
-        
-        <button onclick="fazerLogin()" class="btn-login">ENTRAR</button>
-    </div>
-
-    <div id="dashboard-screen" class="dashboard-container" style="display: none;">
+    <div id="dashboard-screen" class="dashboard-container">
         
         <header>
-            <h1>Olá, Hivo 👋</h1>
+            <h1>Olá, {{ nome }} 👋</h1>
             <p>Foco na evolução diária.</p>
         </header>
 
@@ -52,7 +57,7 @@
 
                 <div class="exercise-card">
                     <div class="card-header"><h3>Costas: Puxada Alta & Remada Baixa</h3></div>
-                    <div class="sets-container"><p class="text-muted">3 Séries de cada (Bi-set opcional)</p></div>
+                    <div class="sets-container"><p class="text-muted">3 Séries de cada</p></div>
                 </div>
 
                 <div class="exercise-card extra-card">
@@ -118,6 +123,22 @@
         </section>
     </div>
 
-    <script src="js/script.js"></script>
+    <script>
+        function openTab(evt, dayName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active-content");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(dayName).style.display = "block";
+            document.getElementById(dayName).classList.add("active-content");
+            evt.currentTarget.className += " active";
+        }
+    </script>
 </body>
 </html>
