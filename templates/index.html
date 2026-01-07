@@ -6,16 +6,30 @@
     <title>Dashboard - EvoTracker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        /* Ajuste para garantir que o dashboard ocupe a tela certa */
         body {
             background-color: #121212;
             color: white;
-            padding: 20px;
+            padding: 20px 10px; /* Ajuste para celular não colar na borda */
         }
         
-        /* Ocultar conteúdo das abas por padrão */
         .tab-content { display: none; }
         .active-content { display: block; animation: fadeIn 0.5s; }
+        
+        /* CORREÇÃO DO CARDIO (Onde estava cortando as letras) */
+        .cardio-label {
+            width: auto !important; /* Força a largura a se adaptar ao texto */
+            min-width: 60px;
+            color: #00B0FF !important;
+        }
+
+        /* Cabeçalho das colunas (Série | Reps | Carga) */
+        .col-headers {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px 5px 35px; /* Alinhado visualmente com os inputs */
+            font-size: 0.75rem;
+            color: #666;
+        }
         
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -29,7 +43,7 @@
         
         <header>
             <h1>Olá, {{ nome }} 👋</h1>
-            <p>Foco na evolução diária.</p>
+            <p>Registre cada repetição.</p>
         </header>
 
         <section id="treinos" class="workout-section">
@@ -47,27 +61,54 @@
                 
                 <div class="exercise-card">
                     <div class="card-header"><h3>Peito: Supino Inclinado (Halteres)</h3></div>
-                    <div class="sets-container"><div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div><div class="set-row"><span>2</span><input type="number" class="input-neon" value="10"><input type="number" class="input-neon" placeholder="kg"></div><div class="set-row"><span>3</span><input type="number" class="input-neon" value="8"><input type="number" class="input-neon" placeholder="kg"></div></div>
+                    <div class="col-headers"><span>Reps</span> <span>Carga (kg)</span></div>
+                    <div class="sets-container">
+                        <div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>2</span><input type="number" class="input-neon" value="10"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>3</span><input type="number" class="input-neon" value="8"><input type="number" class="input-neon" placeholder="kg"></div>
+                    </div>
                 </div>
 
                 <div class="exercise-card">
                     <div class="card-header"><h3>Peito: Peck Deck (Voador)</h3></div>
-                    <div class="sets-container"><p class="text-muted">3 Séries x 8-12 Reps</p></div>
+                    <div class="col-headers"><span>Reps</span> <span>Carga (kg)</span></div>
+                    <div class="sets-container">
+                        <div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>2</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>3</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                    </div>
                 </div>
 
                 <div class="exercise-card">
-                    <div class="card-header"><h3>Costas: Puxada Alta & Remada Baixa</h3></div>
-                    <div class="sets-container"><p class="text-muted">3 Séries de cada</p></div>
+                    <div class="card-header"><h3>Costas: Puxada Alta</h3></div>
+                    <div class="col-headers"><span>Reps</span> <span>Carga (kg)</span></div>
+                    <div class="sets-container">
+                        <div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>2</span><input type="number" class="input-neon" value="10"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>3</span><input type="number" class="input-neon" value="8"><input type="number" class="input-neon" placeholder="kg"></div>
+                    </div>
                 </div>
 
                 <div class="exercise-card extra-card">
                     <div class="card-header"><h3>🔥 Abdominal Supra</h3></div>
-                    <div class="sets-container"><p class="text-muted">3 Séries até a falha</p></div>
+                    <div class="col-headers"><span>Reps</span> <span>Peso?</span></div>
+                    <div class="sets-container">
+                        <div class="set-row"><span>1</span><input type="number" class="input-neon" value="20"><input type="number" class="input-neon" placeholder="-"></div>
+                        <div class="set-row"><span>2</span><input type="number" class="input-neon" value="20"><input type="number" class="input-neon" placeholder="-"></div>
+                        <div class="set-row"><span>3</span><input type="number" class="input-neon" value="20"><input type="number" class="input-neon" placeholder="-"></div>
+                    </div>
                 </div>
 
                 <div class="exercise-card cardio-card">
                     <div class="card-header"><h3>🏃 Cardio Final</h3></div>
-                    <div class="set-row"><span>Tempo:</span><input type="text" class="input-neon" placeholder="20 min"></div>
+                    <div class="set-row">
+                        <span class="cardio-label">Tempo (min):</span>
+                        <input type="number" class="input-neon" placeholder="Ex: 20">
+                    </div>
+                    <div class="set-row" style="margin-top:10px">
+                        <span class="cardio-label">Distância:</span>
+                        <input type="text" class="input-neon" placeholder="Ex: 3km">
+                    </div>
                 </div>
             </div>
 
@@ -76,48 +117,127 @@
 
                 <div class="exercise-card">
                     <div class="card-header"><h3>Quadríceps: Agachamento Livre</h3></div>
-                    <div class="sets-container"><div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div><div class="set-row"><span>2</span><input type="number" class="input-neon" value="10"><input type="number" class="input-neon" placeholder="kg"></div><div class="set-row"><span>3</span><input type="number" class="input-neon" value="8"><input type="number" class="input-neon" placeholder="kg"></div></div>
+                    <div class="col-headers"><span>Reps</span> <span>Carga (kg)</span></div>
+                    <div class="sets-container">
+                        <div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>2</span><input type="number" class="input-neon" value="10"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>3</span><input type="number" class="input-neon" value="8"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>4</span><input type="number" class="input-neon" value="8"><input type="number" class="input-neon" placeholder="kg"></div>
+                    </div>
                 </div>
 
                 <div class="exercise-card">
-                    <div class="card-header"><h3>Posterior: Stiff & Mesa Flexora</h3></div>
-                    <div class="sets-container"><p class="text-muted">3 Séries x 10-12 Reps</p></div>
+                    <div class="card-header"><h3>Posterior: Stiff</h3></div>
+                    <div class="col-headers"><span>Reps</span> <span>Carga (kg)</span></div>
+                    <div class="sets-container">
+                        <div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>2</span><input type="number" class="input-neon" value="10"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>3</span><input type="number" class="input-neon" value="10"><input type="number" class="input-neon" placeholder="kg"></div>
+                    </div>
                 </div>
 
                 <div class="exercise-card">
                     <div class="card-header"><h3>🍑 Elevação Pélvica</h3></div>
-                    <div class="sets-container"><div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div><div class="set-row"><span>2</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div></div>
+                    <div class="col-headers"><span>Reps</span> <span>Carga (kg)</span></div>
+                    <div class="sets-container">
+                        <div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>2</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>3</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                    </div>
                 </div>
 
                 <div class="exercise-card cardio-card">
                     <div class="card-header"><h3>🏃 Cardio Final</h3></div>
-                    <div class="set-row"><span>Tempo:</span><input type="text" class="input-neon" placeholder="20 min"></div>
+                    <div class="set-row">
+                        <span class="cardio-label">Tempo (min):</span>
+                        <input type="number" class="input-neon" placeholder="Ex: 20">
+                    </div>
                 </div>
             </div>
 
             <div id="quarta" class="tab-content">
                 <h2 class="day-title">Quarta: Costas e Bíceps</h2>
-                <div class="exercise-card"><div class="card-header"><h3>Barra Fixa ou Graviton</h3></div><div class="sets-container"><p class="text-muted">4 Séries x Falha</p></div></div>
-                <div class="exercise-card"><div class="card-header"><h3>Remada Curvada</h3></div><div class="sets-container"><p class="text-muted">3 Séries x 10 Reps</p></div></div>
-                <div class="exercise-card"><div class="card-header"><h3>Bíceps: Rosca Scott + Martelo</h3></div><div class="sets-container"><p class="text-muted">3 Séries cada</p></div></div>
-                <div class="exercise-card extra-card"><div class="card-header"><h3>🔥 Abdominal Infra</h3></div><div class="sets-container"><p class="text-muted">3 Séries x 15 Reps</p></div></div>
-                <div class="exercise-card cardio-card"><div class="card-header"><h3>🏃 Cardio Final</h3></div><div class="set-row"><span>Tempo:</span><input type="text" class="input-neon" placeholder="20 min"></div></div>
+                
+                <div class="exercise-card">
+                    <div class="card-header"><h3>Barra Fixa / Graviton</h3></div>
+                    <div class="col-headers"><span>Reps</span> <span>Ajuda (kg)</span></div>
+                    <div class="sets-container">
+                        <div class="set-row"><span>1</span><input type="number" class="input-neon" value="MAX"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>2</span><input type="number" class="input-neon" value="MAX"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>3</span><input type="number" class="input-neon" value="MAX"><input type="number" class="input-neon" placeholder="kg"></div>
+                    </div>
+                </div>
+
+                <div class="exercise-card">
+                    <div class="card-header"><h3>Bíceps: Rosca Scott</h3></div>
+                    <div class="col-headers"><span>Reps</span> <span>Carga (kg)</span></div>
+                    <div class="sets-container">
+                        <div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>2</span><input type="number" class="input-neon" value="10"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>3</span><input type="number" class="input-neon" value="8"><input type="number" class="input-neon" placeholder="kg"></div>
+                    </div>
+                </div>
+                
+                 <div class="exercise-card cardio-card">
+                    <div class="card-header"><h3>🏃 Cardio Final</h3></div>
+                    <div class="set-row"><span class="cardio-label">Tempo (min):</span><input type="number" class="input-neon"></div>
+                </div>
             </div>
 
             <div id="quinta" class="tab-content">
                 <h2 class="day-title">Quinta: Peito e Tríceps</h2>
-                <div class="exercise-card"><div class="card-header"><h3>Supino Reto (Barra/Halter)</h3></div><div class="sets-container"><p class="text-muted">4 Séries x 8-10 Reps</p></div></div>
-                <div class="exercise-card"><div class="card-header"><h3>Crossover Polia Alta</h3></div><div class="sets-container"><p class="text-muted">3 Séries x 12 Reps</p></div></div>
-                <div class="exercise-card"><div class="card-header"><h3>Tríceps: Testa + Francês</h3></div><div class="sets-container"><p class="text-muted">3 Séries cada</p></div></div>
-                <div class="exercise-card cardio-card"><div class="card-header"><h3>🏃 Cardio Final</h3></div><div class="set-row"><span>Tempo:</span><input type="text" class="input-neon" placeholder="20 min"></div></div>
+                
+                <div class="exercise-card">
+                    <div class="card-header"><h3>Supino Reto (Barra)</h3></div>
+                    <div class="col-headers"><span>Reps</span> <span>Carga (kg)</span></div>
+                    <div class="sets-container">
+                        <div class="set-row"><span>1</span><input type="number" class="input-neon" value="10"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>2</span><input type="number" class="input-neon" value="8"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>3</span><input type="number" class="input-neon" value="8"><input type="number" class="input-neon" placeholder="kg"></div>
+                    </div>
+                </div>
+
+                <div class="exercise-card">
+                    <div class="card-header"><h3>Tríceps: Testa</h3></div>
+                    <div class="sets-container">
+                        <div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>2</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>3</span><input type="number" class="input-neon" value="10"><input type="number" class="input-neon" placeholder="kg"></div>
+                    </div>
+                </div>
+
+                 <div class="exercise-card cardio-card">
+                    <div class="card-header"><h3>🏃 Cardio Final</h3></div>
+                    <div class="set-row"><span class="cardio-label">Tempo (min):</span><input type="number" class="input-neon"></div>
+                </div>
             </div>
 
             <div id="sexta" class="tab-content">
                 <h2 class="day-title">Sexta: Perna Completa (Repete)</h2>
-                <div class="exercise-card"><div class="card-header"><h3>Agachamento & Extensora</h3></div><div class="sets-container"><p class="text-muted">Foco em carga</p></div></div>
-                <div class="exercise-card"><div class="card-header"><h3>Posterior & Glúteo</h3></div><div class="sets-container"><p class="text-muted">Stiff e Pélvica</p></div></div>
-                <div class="exercise-card extra-card"><div class="card-header"><h3>🔥 Abdominal Oblíquo</h3></div><div class="sets-container"><p class="text-muted">3 Séries</p></div></div>
-                <div class="exercise-card cardio-card"><div class="card-header"><h3>🏃 Cardio Final</h3></div><div class="set-row"><span>Tempo:</span><input type="text" class="input-neon" placeholder="20 min"></div></div>
+                
+                <div class="exercise-card">
+                    <div class="card-header"><h3>Agachamento / Hack</h3></div>
+                    <div class="col-headers"><span>Reps</span> <span>Carga (kg)</span></div>
+                    <div class="sets-container">
+                        <div class="set-row"><span>1</span><input type="number" class="input-neon" value="12"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>2</span><input type="number" class="input-neon" value="10"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>3</span><input type="number" class="input-neon" value="8"><input type="number" class="input-neon" placeholder="kg"></div>
+                    </div>
+                </div>
+
+                <div class="exercise-card">
+                    <div class="card-header"><h3>Cadeira Extensora</h3></div>
+                    <div class="sets-container">
+                        <div class="set-row"><span>1</span><input type="number" class="input-neon" value="15"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>2</span><input type="number" class="input-neon" value="15"><input type="number" class="input-neon" placeholder="kg"></div>
+                        <div class="set-row"><span>3</span><input type="number" class="input-neon" value="15"><input type="number" class="input-neon" placeholder="kg"></div>
+                    </div>
+                </div>
+
+                 <div class="exercise-card cardio-card">
+                    <div class="card-header"><h3>🏃 Cardio Final</h3></div>
+                    <div class="set-row"><span class="cardio-label">Tempo (min):</span><input type="number" class="input-neon"></div>
+                </div>
             </div>
 
         </section>
