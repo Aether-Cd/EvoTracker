@@ -36,6 +36,7 @@
                     <div class="set-row"><span>2</span><input type="number" id="seg_ex1_s2_r" class="input-neon"><input type="number" id="seg_ex1_s2_w" class="input-neon" placeholder="kg"></div>
                     <div class="set-row"><span>3</span><input type="number" id="seg_ex1_s3_r" class="input-neon"><input type="number" id="seg_ex1_s3_w" class="input-neon" placeholder="kg"></div>
                 </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'seg_ex1')">+ Adicionar Série</button>
             </div>
             <div class="exercise-card">
                 <div class="card-header"><h3>Peck Deck (Voador)</h3></div>
@@ -43,11 +44,15 @@
                     <div class="set-row"><span>1</span><input type="number" id="seg_ex2_s1_r" class="input-neon"><input type="number" id="seg_ex2_s1_w" class="input-neon" placeholder="kg"></div>
                     <div class="set-row"><span>2</span><input type="number" id="seg_ex2_s2_r" class="input-neon"><input type="number" id="seg_ex2_s2_w" class="input-neon" placeholder="kg"></div>
                 </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'seg_ex2')">+ Adicionar Série</button>
             </div>
              <div class="exercise-card extra-card">
                 <div class="card-header"><h3>🔥 Abdominal Supra</h3></div>
-                <div class="set-row"><span>1</span><input type="number" id="seg_abs_s1" class="input-neon" placeholder="reps"></div>
-                <div class="set-row"><span>2</span><input type="number" id="seg_abs_s2" class="input-neon" placeholder="reps"></div>
+                <div class="sets-container">
+                    <div class="set-row"><span>1</span><input type="number" id="seg_abs_s1_r" class="input-neon" placeholder="reps"><input type="number" id="seg_abs_s1_w" class="input-neon" disabled placeholder="-"></div>
+                    <div class="set-row"><span>2</span><input type="number" id="seg_abs_s2_r" class="input-neon" placeholder="reps"><input type="number" id="seg_abs_s2_w" class="input-neon" disabled placeholder="-"></div>
+                </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'seg_abs')">+ Adicionar Série</button>
             </div>
             <div class="exercise-card cardio-card">
                 <div class="card-header"><h3>🏃 Cardio Final</h3></div>
@@ -66,6 +71,7 @@
                     <div class="set-row"><span>2</span><input type="number" id="ter_ex1_s2_r" class="input-neon"><input type="number" id="ter_ex1_s2_w" class="input-neon" placeholder="kg"></div>
                     <div class="set-row"><span>3</span><input type="number" id="ter_ex1_s3_r" class="input-neon"><input type="number" id="ter_ex1_s3_w" class="input-neon" placeholder="kg"></div>
                 </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'ter_ex1')">+ Adicionar Série</button>
             </div>
             <div class="exercise-card">
                 <div class="card-header"><h3>Stiff / Mesa Flexora</h3></div>
@@ -73,6 +79,7 @@
                     <div class="set-row"><span>1</span><input type="number" id="ter_ex2_s1_r" class="input-neon"><input type="number" id="ter_ex2_s1_w" class="input-neon" placeholder="kg"></div>
                     <div class="set-row"><span>2</span><input type="number" id="ter_ex2_s2_r" class="input-neon"><input type="number" id="ter_ex2_s2_w" class="input-neon" placeholder="kg"></div>
                 </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'ter_ex2')">+ Adicionar Série</button>
             </div>
             <div class="exercise-card cardio-card">
                 <div class="card-header"><h3>🏃 Cardio Final</h3></div>
@@ -90,6 +97,7 @@
                     <div class="set-row"><span>2</span><input type="number" id="qua_ex1_s2_r" class="input-neon"><input type="number" id="qua_ex1_s2_w" class="input-neon" placeholder="kg"></div>
                     <div class="set-row"><span>3</span><input type="number" id="qua_ex1_s3_r" class="input-neon"><input type="number" id="qua_ex1_s3_w" class="input-neon" placeholder="kg"></div>
                 </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'qua_ex1')">+ Adicionar Série</button>
             </div>
             <div class="exercise-card">
                 <div class="card-header"><h3>Remada Baixa / Curvada</h3></div>
@@ -97,6 +105,7 @@
                     <div class="set-row"><span>1</span><input type="number" id="qua_ex2_s1_r" class="input-neon"><input type="number" id="qua_ex2_s1_w" class="input-neon" placeholder="kg"></div>
                     <div class="set-row"><span>2</span><input type="number" id="qua_ex2_s2_r" class="input-neon"><input type="number" id="qua_ex2_s2_w" class="input-neon" placeholder="kg"></div>
                 </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'qua_ex2')">+ Adicionar Série</button>
             </div>
             <div class="exercise-card">
                 <div class="card-header"><h3>Bíceps: Rosca Scott</h3></div>
@@ -104,6 +113,7 @@
                     <div class="set-row"><span>1</span><input type="number" id="qua_ex3_s1_r" class="input-neon"><input type="number" id="qua_ex3_s1_w" class="input-neon" placeholder="kg"></div>
                     <div class="set-row"><span>2</span><input type="number" id="qua_ex3_s2_r" class="input-neon"><input type="number" id="qua_ex3_s2_w" class="input-neon" placeholder="kg"></div>
                 </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'qua_ex3')">+ Adicionar Série</button>
             </div>
             <div class="exercise-card cardio-card">
                 <div class="card-header"><h3>🏃 Cardio Final</h3></div>
@@ -121,6 +131,7 @@
                     <div class="set-row"><span>2</span><input type="number" id="qui_ex1_s2_r" class="input-neon"><input type="number" id="qui_ex1_s2_w" class="input-neon" placeholder="kg"></div>
                     <div class="set-row"><span>3</span><input type="number" id="qui_ex1_s3_r" class="input-neon"><input type="number" id="qui_ex1_s3_w" class="input-neon" placeholder="kg"></div>
                 </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'qui_ex1')">+ Adicionar Série</button>
             </div>
             <div class="exercise-card">
                 <div class="card-header"><h3>Crossover Polia</h3></div>
@@ -128,6 +139,7 @@
                     <div class="set-row"><span>1</span><input type="number" id="qui_ex2_s1_r" class="input-neon"><input type="number" id="qui_ex2_s1_w" class="input-neon" placeholder="kg"></div>
                     <div class="set-row"><span>2</span><input type="number" id="qui_ex2_s2_r" class="input-neon"><input type="number" id="qui_ex2_s2_w" class="input-neon" placeholder="kg"></div>
                 </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'qui_ex2')">+ Adicionar Série</button>
             </div>
             <div class="exercise-card">
                 <div class="card-header"><h3>Tríceps Testa / Corda</h3></div>
@@ -135,6 +147,7 @@
                     <div class="set-row"><span>1</span><input type="number" id="qui_ex3_s1_r" class="input-neon"><input type="number" id="qui_ex3_s1_w" class="input-neon" placeholder="kg"></div>
                     <div class="set-row"><span>2</span><input type="number" id="qui_ex3_s2_r" class="input-neon"><input type="number" id="qui_ex3_s2_w" class="input-neon" placeholder="kg"></div>
                 </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'qui_ex3')">+ Adicionar Série</button>
             </div>
             <div class="exercise-card cardio-card">
                 <div class="card-header"><h3>🏃 Cardio Final</h3></div>
@@ -152,6 +165,7 @@
                     <div class="set-row"><span>2</span><input type="number" id="sex_ex1_s2_r" class="input-neon"><input type="number" id="sex_ex1_s2_w" class="input-neon" placeholder="kg"></div>
                     <div class="set-row"><span>3</span><input type="number" id="sex_ex1_s3_r" class="input-neon"><input type="number" id="sex_ex1_s3_w" class="input-neon" placeholder="kg"></div>
                 </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'sex_ex1')">+ Adicionar Série</button>
             </div>
             <div class="exercise-card">
                 <div class="card-header"><h3>Cadeira Extensora</h3></div>
@@ -159,11 +173,15 @@
                     <div class="set-row"><span>1</span><input type="number" id="sex_ex2_s1_r" class="input-neon"><input type="number" id="sex_ex2_s1_w" class="input-neon" placeholder="kg"></div>
                     <div class="set-row"><span>2</span><input type="number" id="sex_ex2_s2_r" class="input-neon"><input type="number" id="sex_ex2_s2_w" class="input-neon" placeholder="kg"></div>
                 </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'sex_ex2')">+ Adicionar Série</button>
             </div>
             <div class="exercise-card extra-card">
                 <div class="card-header"><h3>🔥 Abdominal Oblíquo</h3></div>
-                <div class="set-row"><span>1</span><input type="number" id="sex_abs_s1" class="input-neon" placeholder="reps"></div>
-                <div class="set-row"><span>2</span><input type="number" id="sex_abs_s2" class="input-neon" placeholder="reps"></div>
+                <div class="sets-container">
+                    <div class="set-row"><span>1</span><input type="number" id="sex_abs_s1_r" class="input-neon" placeholder="reps"><input type="number" id="sex_abs_s1_w" class="input-neon" disabled placeholder="-"></div>
+                    <div class="set-row"><span>2</span><input type="number" id="sex_abs_s2_r" class="input-neon" placeholder="reps"><input type="number" id="sex_abs_s2_w" class="input-neon" disabled placeholder="-"></div>
+                </div>
+                <button class="btn-add-set" onclick="adicionarSerie(this, 'sex_abs')">+ Adicionar Série</button>
             </div>
             <div class="exercise-card cardio-card">
                 <div class="card-header"><h3>🏃 Cardio Final</h3></div>
@@ -216,6 +234,4 @@
 
     </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
-</html>
+    <script src="{{ url_for('

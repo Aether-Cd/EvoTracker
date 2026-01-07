@@ -1,4 +1,4 @@
-/* === 1. SISTEMA DE NAVEGAÇÃO === */
+/* === 1. NAVEGAÇÃO ENTRE ABAS === */
 function openTab(evt, dayName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tab-content");
@@ -15,7 +15,34 @@ function openTab(evt, dayName) {
     if (evt) evt.currentTarget.className += " active";
 }
 
-/* === 2. SISTEMA DE SALVAR (LOCALSTORAGE) === */
+/* === 2. SISTEMA DE SÉRIES DINÂMICAS === */
+function adicionarSerie(btn, baseId) {
+    // Encontra o container acima do botão
+    const container = btn.previousElementSibling;
+    if (!container) return; // Segurança
+
+    // Calcula qual é o número da próxima série
+    const totalLinhas = container.getElementsByClassName('set-row').length;
+    const proximaSerie = totalLinhas + 1;
+
+    // Cria os elementos HTML
+    const novaDiv = document.createElement('div');
+    novaDiv.className = 'set-row';
+    
+    // Verifica se é um exercício de ABS (normalmente tem ID contendo 'abs') para decidir o placeholder
+    let isAbs = baseId.includes('abs');
+
+    novaDiv.innerHTML = `
+        <span>${proximaSerie}</span>
+        <input type="number" id="${baseId}_s${proximaSerie}_r" class="input-neon save-data" placeholder="reps">
+        <input type="number" id="${baseId}_s${proximaSerie}_w" class="input-neon save-data" placeholder="${isAbs ? '-' : 'kg'}" ${isAbs ? 'disabled' : ''}>
+    `;
+
+    // Adiciona na tela
+    container.appendChild(novaDiv);
+}
+
+/* === 3. SALVAR E CARREGAR (COM MEMÓRIA DE SÉRIES EXTRAS) === */
 function salvarTreino() {
     const inputs = document.querySelectorAll('input');
     let dadosSalvos = 0;
@@ -26,12 +53,51 @@ function salvarTreino() {
         }
     });
     if (dadosSalvos > 0) {
-        alert("✅ Treino salvo! Seus dados estarão aqui quando você voltar.");
-        calcularTudo(); // Atualiza estatísticas
+        alert("✅ Treino salvo! (Incluindo séries extras)");
+        calcularTudo();
     }
 }
 
 function carregarTreino() {
+    // 1. RECONSTRUIR SÉRIES EXTRAS (S4, S5, S6...)
+    // Varre o LocalStorage procurando chaves que indiquem séries altas
+    Object.keys(localStorage).forEach(key => {
+        // Regex para achar chaves como: seg_ex1_s4_r
+        const match = key.match(/(.*)_s(\d+)_[rw]$/);
+        
+        if (match) {
+            const baseId = match[1]; // ex: seg_ex1
+            const serieNum = parseInt(match[2]); // ex: 4
+            
+            // Se for série 4 ou maior, precisamos garantir que o HTML exista
+            if (serieNum > 3) {
+                // Tenta achar o input. Se não existir, temos que criar.
+                const inputExiste = document.getElementById(key);
+                
+                if (!inputExiste) {
+                    // Precisamos achar o botão "+" desse exercício para clicar nele virtualmente
+                    // Usamos a série 1 como âncora para achar o lugar certo
+                    const ancora = document.getElementById(`${baseId}_s1_r`) || document.getElementById(`${baseId}_s1`);
+                    
+                    if (ancora) {
+                        const container = ancora.closest('.sets-container');
+                        const btnAdd = container.nextElementSibling; // O botão fica depois do container
+                        
+                        // Adiciona séries até chegar na necessária
+                        let linhasAtuais = container.getElementsByClassName('set-row').length;
+                        while (linhasAtuais < serieNum) {
+                            if(btnAdd && btnAdd.classList.contains('btn-add-set')) {
+                                adicionarSerie(btnAdd, baseId);
+                            }
+                            linhasAtuais++;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // 2. PREENCHER VALORES
     const inputs = document.querySelectorAll('input');
     inputs.forEach(input => {
         if (input.id) {
@@ -39,10 +105,11 @@ function carregarTreino() {
             if (valorSalvo) input.value = valorSalvo;
         }
     });
+    
     setTimeout(calcularTudo, 500);
 }
 
-/* === 3. GRÁFICO (CHART.JS) === */
+/* === 4. GRÁFICO E GRÁFICO DE BARRAS === */
 let muscleData = { labels: ['Peitoral', 'Costas', 'Pernas', 'Ombros', 'Bíceps'], values: [10, 10, 10, 10, 10] };
 let myChart = null;
 
@@ -73,7 +140,7 @@ function resetFatigue() {
     }
 }
 
-/* === 4. CALCULADORA === */
+/* === 5. CALCULADORA === */
 function calcularTudo() {
     const altura = parseFloat(document.getElementById('altura')?.value);
     const peso = parseFloat(document.getElementById('peso')?.value) || 70;
@@ -94,6 +161,7 @@ function calcularTudo() {
     document.querySelectorAll('.tab-content:not(#perfil) input[type="number"]').forEach(inp => {
         if(inp.value > 0 && !inp.parentElement.querySelector('.cardio-label')) sets++;
     });
+    // Divide por 2 porque cada série tem 2 inputs (reps e peso)
     let cal = Math.floor((Math.ceil(sets / 2) * 1.5) * 6 * peso / 200);
     document.querySelectorAll('.cardio-card input').forEach(inp => {
         if(inp.value > 0) cal += (parseFloat(inp.value) * 8);
@@ -102,7 +170,7 @@ function calcularTudo() {
     if(elCal) elCal.innerText = Math.round(cal);
 }
 
-// Inicialização
+// INICIALIZAÇÃO
 document.addEventListener("DOMContentLoaded", function() {
     const ctx = document.getElementById('muscleChart');
     if (ctx) {

@@ -44,4 +44,20 @@ header p { color: #00B0FF; font-size: 0.9rem; margin-top: 5px;}
 .btn-neon { width: 100%; padding: 14px; background-color: #00B0FF; border: none; border-radius: 25px; color: black; font-weight: bold; font-size: 1rem; cursor: pointer; text-transform: uppercase; transition: 0.3s; margin-top: 10px; }
 .btn-neon:hover { filter: brightness(1.2); transform: scale(1.02); }
 .btn-save { background-color: #00E676; box-shadow: 0 0 15px rgba(0, 230, 118, 0.3); }
+
+/* BOTÃO ADICIONAR SÉRIE (+) */
+.btn-add-set {
+    background: transparent;
+    border: 1px dashed #444;
+    color: #888;
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    transition: 0.3s;
+}
+.btn-add-set:hover { border-color: #00E676; color: #00E676; background-color: rgba(0, 230, 118, 0.05); }
+
 .text-muted { color: #888; font-size: 0.8em; margin-top: 5px; }
